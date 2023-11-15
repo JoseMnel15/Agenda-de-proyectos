@@ -6,7 +6,7 @@
                 type="button"
                 class="agregar-tarea"
                 id="agregar-tarea"
-            >&#43; Nueva Tarea</button>
+            >&#43; Nueva Actividad</button>
         </div>
 
         <div id="filtros" class="filtros">

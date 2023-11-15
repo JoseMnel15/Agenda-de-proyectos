@@ -1,6 +1,6 @@
 <?php
 
-$db = mysqli_connect('localhost', 'root', 'Medina', 'agenda_proyectos');
+$db = mysqli_connect('localhost', 'root', 'Medina', 'agenda');
 
 
 if (!$db) {
