@@ -1,19 +1,19 @@
 <?php return array(
     'root' => array(
-        'name' => 'juandelatorre/up-task_mvc',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => NULL,
+        'name' => 'agendaproyectos/topicos',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '93280deaa2c84420063257557edd11b99463618a',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
-        'juandelatorre/up-task_mvc' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => NULL,
+        'agendaproyectos/topicos' => array(
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '93280deaa2c84420063257557edd11b99463618a',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
