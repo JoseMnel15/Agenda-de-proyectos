@@ -12,14 +12,14 @@
 
     // Filtros de búsqueda
     const filtros = document.querySelectorAll('#filtros input[type="radio');
-    filtros.forEach( radio => {
+    filtros.forEach(radio => {
         radio.addEventListener('input', filtrarTareas);
-    } )
+    })
 
     function filtrarTareas(e) {
         const filtro = e.target.value;
 
-        if(filtro !== '') {
+        if (filtro !== '') {
             filtradas = tareas.filter(tarea => tarea.estado === filtro);
         } else {
             filtradas = [];
@@ -37,7 +37,7 @@
 
             tareas = resultado.tareas;
             mostrarTareas();
-        
+
         } catch (error) {
             console.log(error);
         }
@@ -50,11 +50,11 @@
 
         const arrayTareas = filtradas.length ? filtradas : tareas;
 
-        if(arrayTareas.length === 0) {
+        if (arrayTareas.length === 0) {
             const contenedorTareas = document.querySelector('#listado-tareas');
 
             const textoNoTareas = document.createElement('LI');
-            textoNoTareas.textContent = 'No Hay Tareas';
+            textoNoTareas.textContent = 'No Hay Actividades';
             textoNoTareas.classList.add('no-tareas');
 
             contenedorTareas.appendChild(textoNoTareas);
@@ -75,7 +75,7 @@
             const nombreTarea = document.createElement('P');
             nombreTarea.textContent = tarea.nombre;
             nombreTarea.ondblclick = function() {
-                mostrarFormulario(editar = true, {...tarea});
+                mostrarFormulario(editar = true, {...tarea });
             }
 
             const opcionesDiv = document.createElement('DIV');
@@ -88,7 +88,7 @@
             btnEstadoTarea.textContent = estados[tarea.estado];
             btnEstadoTarea.dataset.estadoTarea = tarea.estado;
             btnEstadoTarea.ondblclick = function() {
-                cambiarEstadoTarea({...tarea});
+                cambiarEstadoTarea({...tarea });
             }
 
             const btnEliminarTarea = document.createElement('BUTTON');
@@ -96,7 +96,7 @@
             btnEliminarTarea.dataset.idTarea = tarea.id;
             btnEliminarTarea.textContent = 'Eliminar';
             btnEliminarTarea.ondblclick = function() {
-                confirmarEliminarTarea({...tarea});
+                confirmarEliminarTarea({...tarea });
             }
 
             opcionesDiv.appendChild(btnEstadoTarea);
@@ -114,36 +114,37 @@
         const totalPendientes = tareas.filter(tarea => tarea.estado === "0");
         const pendientesRadio = document.querySelector('#pendientes');
 
-        if(totalPendientes.length === 0) {
+        if (totalPendientes.length === 0) {
             pendientesRadio.disabled = true;
         } else {
             pendientesRadio.disabled = false;
-        }   
+        }
     }
+
     function totalCompletas() {
         const totalCompletas = tareas.filter(tarea => tarea.estado === "1");
         const completasRadio = document.querySelector('#completadas');
 
-        if(totalCompletas.length === 0) {
+        if (totalCompletas.length === 0) {
             completasRadio.disabled = true;
         } else {
             completasRadio.disabled = false;
-        }   
+        }
     }
 
-    function mostrarFormulario( editar = false, tarea = {} ) {
+    function mostrarFormulario(editar = false, tarea = {}) {
         console.log(tarea);
         const modal = document.createElement('DIV');
         modal.classList.add('modal');
         modal.innerHTML = `
             <form class="formulario nueva-tarea">
-                <legend>${editar ? 'Editar Tarea' : 'Añade una nueva tarea'}</legend>
+                <legend>${editar ? 'Editar Actividad' : 'Añade una nueva Actividad'}</legend>
                 <div class="campo">
-                    <label>Tarea</label>
+                    <label>Actividad</label>
                     <input 
                         type="text"
-                        name="tarea"
-                        placeholder="${tarea.nombre ? 'Edita la Tarea' : 'Añadir Tarea al Proyecto Actual'}"
+                        name="Tarea"
+                        placeholder="${tarea.nombre ? 'Edita la Actividad' : 'Añadir una actividad al Proyecto Actual'}"
                         id="tarea"
                         value="${tarea.nombre ? tarea.nombre : ''}"
                     />
@@ -152,7 +153,7 @@
                     <input 
                         type="submit" 
                         class="submit-nueva-tarea" 
-                        value="${tarea.nombre ? 'Guardar Cambios' : 'Añadir Tarea'} " 
+                        value="${tarea.nombre ? 'Guardar Cambios' : 'Añadir Actividad'} " 
                     />
                     <button type="button" class="cerrar-modal">Cancelar</button>
                 </div>
@@ -166,29 +167,29 @@
 
         modal.addEventListener('click', function(e) {
             e.preventDefault();
-            if(e.target.classList.contains('cerrar-modal')) {
+            if (e.target.classList.contains('cerrar-modal')) {
                 const formulario = document.querySelector('.formulario');
                 formulario.classList.add('cerrar');
                 setTimeout(() => {
                     modal.remove();
                 }, 500);
-            } 
-            if(e.target.classList.contains('submit-nueva-tarea')) {
+            }
+            if (e.target.classList.contains('submit-nueva-tarea')) {
                 const nombreTarea = document.querySelector('#tarea').value.trim();
 
-                if(nombreTarea === '') {
+                if (nombreTarea === '') {
                     // Mostrar una alerta de error
-                    mostrarAlerta('El Nombre de la tarea es Obligatorio', 'error', document.querySelector('.formulario legend'));
+                    mostrarAlerta('El Nombre de la Actividad es Obligatorio', 'error', document.querySelector('.formulario legend'));
                     return;
-                } 
+                }
 
-                if(editar) {
+                if (editar) {
                     tarea.nombre = nombreTarea;
                     actualizarTarea(tarea);
                 } else {
                     agregarTarea(nombreTarea);
                 }
-                
+
             }
         })
 
@@ -199,7 +200,7 @@
     function mostrarAlerta(mensaje, tipo, referencia) {
         // Previene la creación de multiples alertas
         const alertaPrevia = document.querySelector('.alerta');
-        if(alertaPrevia) {
+        if (alertaPrevia) {
             alertaPrevia.remove();
         }
 
@@ -230,16 +231,16 @@
                 method: 'POST',
                 body: datos
             });
-            
+
             const resultado = await respuesta.json();
-            
+
             mostrarAlerta(
-                resultado.mensaje, 
-                resultado.tipo, 
+                resultado.mensaje,
+                resultado.tipo,
                 document.querySelector('.formulario legend')
             );
 
-            if(resultado.tipo === 'exito') {
+            if (resultado.tipo === 'exito') {
                 const modal = document.querySelector('.modal');
                 setTimeout(() => {
                     modal.remove();
@@ -270,8 +271,8 @@
 
     async function actualizarTarea(tarea) {
 
-        const {estado, id, nombre, proyectoId} = tarea;
-        
+        const { estado, id, nombre, proyectoId } = tarea;
+
         const datos = new FormData();
         datos.append('id', id);
         datos.append('nombre', nombre);
@@ -289,7 +290,7 @@
 
             // console.log(resultado);
 
-            if(resultado.respuesta.tipo === 'exito') {
+            if (resultado.respuesta.tipo === 'exito') {
                 Swal.fire(
                     resultado.respuesta.mensaje,
                     resultado.respuesta.mensaje,
@@ -297,17 +298,17 @@
                 );
 
                 const modal = document.querySelector('.modal');
-                if(modal) {
+                if (modal) {
                     modal.remove();
                 }
-               
-                
+
+
 
                 tareas = tareas.map(tareaMemoria => {
-                    if(tareaMemoria.id === id) {
+                    if (tareaMemoria.id === id) {
                         tareaMemoria.estado = estado;
                         tareaMemoria.nombre = nombre;
-                    } 
+                    }
 
                     return tareaMemoria;
                 });
@@ -321,21 +322,21 @@
 
     function confirmarEliminarTarea(tarea) {
         Swal.fire({
-            title: '¿Eliminar Tarea?',
+            title: '¿Eliminar Actividad?',
             showCancelButton: true,
             confirmButtonText: 'Si',
             cancelButtonText: 'No'
         }).then((result) => {
             if (result.isConfirmed) {
                 eliminarTarea(tarea);
-            } 
+            }
         })
     }
 
     async function eliminarTarea(tarea) {
 
-        const {estado, id, nombre} = tarea;
-        
+        const { estado, id, nombre } = tarea;
+
         const datos = new FormData();
         datos.append('id', id);
         datos.append('nombre', nombre);
@@ -350,7 +351,7 @@
             });
 
             const resultado = await respuesta.json();
-            if(resultado.resultado) {
+            if (resultado.resultado) {
                 // mostrarAlerta(
                 //     resultado.mensaje, 
                 //     resultado.tipo, 
@@ -359,12 +360,12 @@
 
                 Swal.fire('Eliminado!', resultado.mensaje, 'success');
 
-                tareas = tareas.filter( tareaMemoria => tareaMemoria.id !== tarea.id);
+                tareas = tareas.filter(tareaMemoria => tareaMemoria.id !== tarea.id);
                 mostrarTareas();
             }
-            
+
         } catch (error) {
-            
+
         }
     }
 
@@ -376,8 +377,8 @@
 
     function limpiarTareas() {
         const listadoTareas = document.querySelector('#listado-tareas');
-        
-        while(listadoTareas.firstChild) {
+
+        while (listadoTareas.firstChild) {
             listadoTareas.removeChild(listadoTareas.firstChild);
         }
     }
